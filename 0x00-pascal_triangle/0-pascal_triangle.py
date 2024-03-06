@@ -1,25 +1,23 @@
 #!/usr/bin/python3
+'''Module to return pascal triangle'''
+
+
 def pascal_triangle(n):
-    if n <= 0:
-        return []
-
-    triangle = [[1]]
-    for i in range(1, n):
-        row = [1]
-        prev_row = triangle[-1]
-        for j in range(1, i):
-            row.append(prev_row[j - 1] + prev_row[j])
-        row.append(1)
-        triangle.append(row)
-
-    return triangle
-
-def print_pascal_triangle(triangle):
-    for row in triangle:
-        print(' '.join(map(str, row)))
-
-if __name__ == "__main__":
-    n = 5  # Change this value to generate Pascal's triangle of different heights
-    triangle = pascal_triangle(n)
-    print_pascal_triangle(triangle)
-
+    '''
+    Pascal's Triangle
+    Args:
+      n (int): The number of rows of the triangle
+    Returns:
+      List of integers representing the Pacasl's triangle
+    '''
+    lists = []
+    if n == 0:
+        return lists
+    for i in range(n):
+        lists.append([])
+        lists[i].append(1)
+        if (i > 0):
+            for j in range(1, i):
+                lists[i].append(lists[i -1][j - 1] + lists[i - 1][j])
+            lists[i].append(1)
+    return lists
