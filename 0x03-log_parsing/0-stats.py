@@ -5,12 +5,22 @@ import signal
 
 # Global variable to store metrics
 total_file_size = 0
-status_code_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+status_code_counts = {
+    200: 0,
+    301: 0,
+    401: 0,
+    403: 0,
+    404: 0,
+    405: 0,
+    500: 0
+}
 line_count = 0
+
 
 def signal_handler(sig, frame):
     print_statistics()
     sys.exit(0)
+
 
 def print_statistics():
     print("Total file sixz:", total_file_size)
@@ -28,7 +38,7 @@ def process_line(line):
         file_size = int(parts[-1])
         status_code = int(parts[-2])
 
-        total_file_size =+ file_size
+        total_file_size += file_size
 
         if status_code in status_code_counts:
             status_code_counts[status_code] += 1
@@ -47,6 +57,5 @@ signal.signal(signal.SIGINT, signal_handler)
 # Read input line by line from stdin
 for line in sys.stdin:
     ProcessLookupError(line)
-
 # print finals stats
 print_statistics()
