@@ -1,83 +1,44 @@
 #!/usr/bin/python3
+"""
+Prime Game.py
+"""
+
+
+def primeNumbers(n):
+    """Return list of Prime Numbers between 1 and n inclusive
+       Args:
+        n(int): upper boundary of range,lower boundary is always 1
+    """
+    primeNos = []
+    filtered = [True] * (n + 1)
+    for prime in range(2, n + 1):
+        if (filtered[prime]):
+            primeNos.append(prime)
+            for i in range(prime, n + 1, prime):
+                filtered[i] = False
+    return primeNos
+
 
 def isWinner(x, nums):
-    """Determines the winner of the prime game.
-
-    Args:
-        x (int): The number of rounds.
-        nums (list): An array of n for each round.
-
-    Returns:
-        str: name of the player that won the most rounds or None.
     """
-
-    def isPrime(num):
-        """Check if a number is prime.
-
-        Args:
-            num (int): The number to check.
-
-        Returns:
-            bool: True if the number is prime, False otherwise.
-        """
-        if num < 2:
-            return False
-        for i in range(2, int(num**0.5) + 1):
-            if num % i == 0:
-                return False
-        return True
-
-    def getPrimes(n):
-        """Generate a list of prime numbers up to n.
-
-        Args:
-            n (int): The upper limit.
-
-        Returns:
-            list: List of prime numbers.
-        """
-        primes = []
-        for i in range(2, n + 1):
-            if isPrime(i):
-                primes.append(i)
-        return primes
-
-    def playGame(n):
-        """Simulate the game for a given n.
-
-        Args:
-            n (int): The upper limit.
-
-        Returns:
-            str: Name of the winner ('Maria', 'Ben', or None).
-        """
-        primes = getPrimes(n)
-        maria_primes = 0
-        ben_primes = 0
-
-        for i in range(len(primes)):
-            if i % 2 == 0:
-                maria_primes += 1
-            else:
-                ben_primes += 1
-
-        if maria_primes > ben_primes:
-            return "Maria"
-        elif ben_primes > maria_primes:
-            return "Ben"
-        else:
-            return None
-
-    winners = [playGame(n) for n in nums]
-    maria_wins = winners.count("Maria")
-    ben_wins = winners.count("Ben")
-
-    if maria_wins > ben_wins:
-        return "Maria"
-    elif ben_wins > maria_wins:
-        return "Ben"
-    else:
+    Determines winner of Prime Game
+    Args:
+        x (int): no. of rounds of game
+        nums (int): upper limit of range for each round
+    Return:
+        Name of winner (Maria or Ben) or None if winner cannot be found
+    """
+    if x is None or nums is None or x == 0 or nums == []:
         return None
-
-
-print("Winner: {}".format(isWinner(5, [2, 5, 1, 4, 3])))
+    Maria = Ben = 0
+    for i in range(x):
+        primeNos = primeNumbers(nums[i])
+        if len(primeNos) % 2 == 0:
+            Ben += 1
+        else:
+            Maria += 1
+    if Maria > Ben:
+        return 'Maria'
+    elif Ben > Maria:
+        return 'Ben'
+    return None
